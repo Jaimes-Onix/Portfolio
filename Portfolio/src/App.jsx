@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import * as THREE from 'three'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
@@ -6,10 +7,49 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const mountRef = useRef(null)
+
+  useEffect(() => {
+    // Basic Three.js setup
+    const scene = new THREE.Scene()
+    const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000)
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
+    renderer.setSize(200, 200)
+    mountRef.current.appendChild(renderer.domElement)
+
+    const geometry = new THREE.BoxGeometry()
+    const material = new THREE.MeshNormalMaterial()
+    const cube = new THREE.Mesh(geometry, material)
+    scene.add(cube)
+
+    camera.position.z = 2
+
+    const animate = () => {
+      requestAnimationFrame(animate)
+      cube.rotation.x += 0.01
+      cube.rotation.y += 0.01
+      renderer.render(scene, camera)
+    }
+    animate()
+
+    return () => {
+      if (mountRef.current) {
+        mountRef.current.removeChild(renderer.domElement)
+      }
+    }
+  }, [])
 
   return (
     <>
+      <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 text-center font-bold">
+        Tailwind CSS + Three.js Ready!
+      </div>
+      
       <section id="center">
+        <div className="flex justify-center mb-4">
+          <div ref={mountRef} className="border-2 border-dashed border-purple-500 rounded-lg"></div>
+        </div>
+        
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
           <img src={reactLogo} className="framework" alt="React logo" />
@@ -30,6 +70,7 @@ function App() {
       </section>
 
       <div className="ticks"></div>
+
 
       <section id="next-steps">
         <div id="docs">
