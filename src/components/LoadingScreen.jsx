@@ -31,6 +31,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
   const [progress, setProgress] = useState(0);
   const [isShattering, setIsShattering] = useState(false);
   const [isGlitching, setIsGlitching] = useState(false);
+  const [isNameDone, setIsNameDone] = useState(false);
 
   // Typewriter state
   const [displayedText, setDisplayedText] = useState('');
@@ -85,6 +86,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
           rafRef.current = requestAnimationFrame(tick);
         } else {
           state.phase = 'done';
+          setIsNameDone(true);
         }
       }
     };
@@ -146,24 +148,39 @@ const LoadingScreen = ({ onLoadingComplete }) => {
             exit={{ opacity: 0, scale: 1.1, filter: 'blur(20px)' }}
             className="text-center px-4 flex flex-col items-center"
           >
-            {/* Typewriter name */}
-            <div className="h-16 md:h-20 flex items-center justify-center mb-2">
-              <motion.h1
-                className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter text-white leading-tight whitespace-nowrap"
-              >
-                {displayedText}
-              </motion.h1>
-            </div>
+            {!isNameDone ? (
+              <>
+                {/* Typewriter name */}
+                <div className="h-16 md:h-20 flex items-center justify-center mb-2">
+                  <motion.h1
+                    className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter text-white leading-tight whitespace-nowrap"
+                  >
+                    {displayedText}
+                  </motion.h1>
+                </div>
 
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-sm md:text-xl text-neutral-500 uppercase tracking-[0.6em] font-black mb-16"
-            >
-              Full stack developer
-            </motion.p>
+                {/* Subtitle */}
+                <motion.p
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-sm md:text-xl text-neutral-500 uppercase tracking-[0.6em] font-black mb-16"
+                >
+                  Full stack developer
+                </motion.p>
+              </>
+            ) : (
+              <div className="h-24 md:h-32 flex items-center justify-center mb-12">
+                <div className="loader-wrapper">
+                    <div className="loader-circle"></div>
+                    <div className="loader-circle"></div>
+                    <div className="loader-circle"></div>
+                    <div className="loader-shadow"></div>
+                    <div className="loader-shadow"></div>
+                    <div className="loader-shadow"></div>
+                </div>
+              </div>
+            )}
 
             {/* Progress bar */}
             <div className="w-64 md:w-[400px] h-[3px] bg-white/5 rounded-full mx-auto overflow-hidden relative">

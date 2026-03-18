@@ -11,6 +11,8 @@ import AboutMe from './pages/AboutMe';
 import Companies from './pages/Companies';
 
 import LoadingScreen from './components/LoadingScreen';
+import PageLoader from './components/PageLoader';
+import { AnimatePresence } from 'framer-motion';
 
 // Helper for Tailwind classes
 export function cn(...inputs) {
@@ -180,6 +182,39 @@ const Navbar = () => {
 };
 
 // -----------------------------------------------------------------------------
+// NAVIGATION WRAPPER (Handles route transitions)
+// -----------------------------------------------------------------------------
+const NavigationWrapper = ({ children }) => {
+  const location = useLocation();
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [displayLocation, setDisplayLocation] = useState(location);
+
+  useEffect(() => {
+    if (location.pathname !== displayLocation.pathname) {
+      setIsTransitioning(true);
+      // Wait for a bit to show the loader, then switch content
+      const timer = setTimeout(() => {
+        setDisplayLocation(location);
+        setIsTransitioning(false);
+      }, 700); // Duration to show the loading animation
+      return () => clearTimeout(timer);
+    }
+  }, [location, displayLocation]);
+
+  return (
+    <>
+      <AnimatePresence mode="wait">
+        {isTransitioning && <PageLoader key="page-loader" />}
+      </AnimatePresence>
+      <div className={cn("transition-opacity duration-300", isTransitioning ? "opacity-0" : "opacity-100")}>
+        {React.cloneElement(children, { location: displayLocation })}
+      </div>
+    </>
+  );
+};
+
+
+// -----------------------------------------------------------------------------
 // PROJECT CARD
 // -----------------------------------------------------------------------------
 const ProjectCard = ({ title, category, image, index }) => {
@@ -229,12 +264,14 @@ export default function App() {
 
         <Navbar />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/about" element={<AboutMe />} />
-          <Route path="/companies" element={<Companies />} />
-        </Routes>
+        <NavigationWrapper>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/about" element={<AboutMe />} />
+            <Route path="/companies" element={<Companies />} />
+          </Routes>
+        </NavigationWrapper>
 
         {/* FINAL CTA / CONTACT (Always visible at bottom) */}
         <section id="contact" className="py-20 px-4 text-center">

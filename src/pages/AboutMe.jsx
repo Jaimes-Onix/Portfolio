@@ -1,6 +1,73 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Layout, Palette, Code } from 'lucide-react';
+import { 
+  Layout, 
+  Palette, 
+  Code, 
+  Database, 
+  Globe, 
+  Terminal, 
+  Layers, 
+  Zap, 
+  Shield, 
+  Cpu 
+} from 'lucide-react';
+
+const TECH_ITEMS = [
+  { name: "React", icon: <Layout className="text-blue-400" /> },
+  { name: "Next.js", icon: <Globe className="text-white" /> },
+  { name: "Node.js", icon: <Terminal className="text-green-500" /> },
+  { name: "TypeScript", icon: <Code className="text-blue-600" /> },
+  { name: "PostgreSQL", icon: <Database className="text-blue-300" /> },
+  { name: "Supabase", icon: <Shield className="text-emerald-500" /> },
+  { name: "Tailwind", icon: <Palette className="text-cyan-400" /> },
+  { name: "Docker", icon: <Layers className="text-blue-500" /> },
+  { name: "Figma", icon: <Cpu className="text-purple-500" /> },
+  { name: "Git", icon: <Code className="text-orange-600" /> },
+];
+
+const ThreeDSlider = () => {
+  return (
+    <section className="py-20 mb-20 relative overflow-hidden bg-[#060606]">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <div className="text-center mb-16">
+          <div className="inline-block px-4 py-1.5 mb-6 text-[10px] font-bold uppercase tracking-[0.3em] bg-white/5 text-muted-foreground rounded-md border border-white/10">
+            TECH ECOSYSTEM
+          </div>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white">
+            TOOLS OF THE <span className="text-gradient">TRADE.</span>
+          </h2>
+        </div>
+
+        <div className="banner">
+          <div className="slider" style={{ '--quantity': TECH_ITEMS.length }}>
+            {TECH_ITEMS.map((item, index) => (
+              <div 
+                key={index} 
+                className="item" 
+                style={{ '--position': index + 1 }}
+              >
+                <div className="item-card glass group">
+                  <div className="icon-wrapper transform group-hover:scale-110 transition-transform duration-500">
+                    {React.cloneElement(item.icon, { size: 40 })}
+                  </div>
+                  <span className="text-white/80 group-hover:text-white transition-colors">
+                    {item.name}
+                  </span>
+                  
+                  {/* Subtle shine effect */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 
 const AboutMe = () => {
@@ -77,6 +144,8 @@ const AboutMe = () => {
           </div>
         </div>
       </section>
+
+      <ThreeDSlider />
     </div>
   );
 };
