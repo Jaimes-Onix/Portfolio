@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #060606;
+  --color-background: rgba(6, 6, 6, 0.4);
   --color-foreground: #ffffff;
-  --color-card: #0f0f0f;
+  --color-card: rgba(15, 15, 15, 0.6);
   --color-card-foreground: #ffffff;
   --color-popover: #060606;
   --color-popover-foreground: #ffffff;
@@ -17,7 +17,7 @@
   --color-accent-foreground: #060606;
   --color-destructive: #ef4444;
   --color-destructive-foreground: #ffffff;
-  --color-border: #262626;
+  --color-border: rgba(255, 255, 255, 0.1);
   --color-input: #262626;
   --color-ring: #ffffff;
 
@@ -31,12 +31,12 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased selection:bg-white selection:text-black;
+    @apply bg-transparent text-foreground antialiased selection:bg-white selection:text-black;
     font-family: 'Outfit', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
     background-image: 
-      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
     background-size: 60px 60px;
     background-attachment: fixed;
   }
@@ -46,11 +46,29 @@
 }
 
 .glass {
-  @apply bg-background/40 backdrop-blur-2xl border border-white/5 shadow-[0_8px_32px_0_rgba(0,0,0,0.8)];
+  @apply bg-white/[0.03] backdrop-blur-[32px] border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.6)];
+}
+
+.glass-morphic {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.glass-morphic:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 48px 0 rgba(0, 229, 255, 0.15);
 }
 
 .text-gradient {
   @apply bg-clip-text text-transparent bg-gradient-to-br from-white via-primary to-accent;
+}
+
+.text-gradient-teal {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#00E5FF] to-white;
 }
 
 ::-webkit-scrollbar {
@@ -178,27 +196,40 @@
 
 .banner .slider {
   position: absolute;
-  width: 200px;
-  height: 250px;
+  width: 220px;
+  height: 300px;
   transform-style: preserve-3d;
-  animation: autoRun 30s linear infinite;
   z-index: 10;
+  transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.banner .slider.is-active {
+  animation: autoRun 40s linear infinite;
 }
 
 @keyframes autoRun {
   from {
-    transform: rotateX(-10deg) rotateY(0deg);
+    transform: rotateX(-16deg) rotateY(0deg);
   }
   to {
-    transform: rotateX(-10deg) rotateY(360deg);
+    transform: rotateX(-16deg) rotateY(360deg);
   }
 }
 
 .banner .slider .item {
   position: absolute;
   inset: 0 0 0 0;
-  transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(450px);
   transform-style: preserve-3d;
+  /* Initial state: at center and hidden */
+  transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(0px);
+  opacity: 0;
+  transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease;
+  transition-delay: calc(var(--position) * 0.1s);
+}
+
+.banner.is-visible .slider .item {
+  transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(450px);
+  opacity: 1;
 }
 
 .banner .slider:hover {
@@ -238,4 +269,48 @@
 
 .item-card .icon-wrapper {
   color: white;
+}
+
+@property --card-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: -45deg;
+}
+
+/* Uiverse Custom Project Card Glow */
+.uiverse-card {
+  position: relative;
+  z-index: 10;
+}
+
+.uiverse-card::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  margin: auto;
+  border-radius: 2.15rem;
+  background: linear-gradient(var(--card-angle), #00E5FF 0%, #E81CFF 100%);
+  z-index: -1;
+  pointer-events: none;
+  transition: --card-angle 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.uiverse-card::after {
+  content: "";
+  z-index: -2;
+  position: absolute;
+  inset: -3px;
+  border-radius: 2.15rem;
+  background: linear-gradient(var(--card-angle), #00E5FF 0%, #E81CFF 100%);
+  filter: blur(20px);
+  transition: --card-angle 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.group:hover .uiverse-card::after {
+  filter: blur(35px);
+}
+
+.group:hover .uiverse-card::before,
+.group:hover .uiverse-card::after {
+  --card-angle: -135deg;
 }

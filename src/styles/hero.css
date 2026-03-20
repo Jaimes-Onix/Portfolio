@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+/* Canvas Styles */
+.hero-canvas-container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+
+.hero-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+}
+
+/* Scroll Smoothing */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar for cleaner look */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Text Gradient for Luxury Feel */
+.text-gradient-teal {
+  background: linear-gradient(135deg, #00E5FF 0%, #005f73 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Shine effect */
+.shine-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-effect::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: rotate(45deg);
+  transition: 0.5s;
+}
+
+.shine-effect:hover::after {
+  top: 100%;
+  left: 100%;
+}

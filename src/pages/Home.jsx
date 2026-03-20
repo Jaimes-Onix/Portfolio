@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import PageTransition from '../components/PageTransition';
 import { 
   ChevronDown, Code, Layout, Database, Terminal, Cpu, 
   Shield, Zap, Layers, Globe, Palette, Copy, Check, GlobeIcon 
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+
 
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -14,18 +15,27 @@ function cn(...inputs) {
 }
 
 const TECH_STACK = [
+  { name: "React", icon: <Layout />, color: "#61DAFB" },
+  { name: "Next.js", icon: <Globe />, color: "#FFFFFF" },
+  { name: "TypeScript", icon: <Code />, color: "#3178C6" },
+  { name: "Tailwind CSS", icon: <Palette />, color: "#38B2AC" },
+  { name: "Framer Motion", icon: <Zap />, color: "#0055FF" },
+  { name: "Node.js", icon: <Terminal />, color: "#339933" },
+  { name: "PostgreSQL", icon: <Database />, color: "#336791" },
+  { name: "Supabase", icon: <Shield />, color: "#3ECF8E" },
+];
+
+const MARQUEE_TECH = [
   { name: "React", icon: <Layout /> },
   { name: "Next.js", icon: <Globe /> },
-  { name: "TypeScript", icon: <Code /> },
-  { name: "Tailwind CSS", icon: <Palette /> },
-  { name: "Framer Motion", icon: <Zap /> },
-  { name: "Three.js", icon: <Layers /> },
   { name: "Node.js", icon: <Terminal /> },
+  { name: "TypeScript", icon: <Code /> },
+  { name: "Tailwind", icon: <Palette /> },
   { name: "PostgreSQL", icon: <Database /> },
-  { name: "Supabase", icon: <Shield /> },
+  { name: "Python", icon: <Terminal /> },
   { name: "Docker", icon: <Layers /> },
-  { name: "Figma", icon: <Palette /> },
-  { name: "Vite", icon: <Zap /> },
+  { name: "Supabase", icon: <Shield /> },
+  { name: "Framer", icon: <Zap /> },
 ];
 
 const BentoCard = ({ children, className, delay = 0 }) => (
@@ -125,21 +135,38 @@ const GlobeCard = () => (
       <p className="text-muted-foreground text-xs">I'm based in Earth (usually), and open to remote work worldwide.</p>
     </div>
     <div className="relative flex-1 flex items-center justify-center overflow-hidden group/globe">
-      <div className="w-48 h-48 rounded-full border border-white/10 relative">
+      <div className="w-48 h-48 rounded-full relative flex items-center justify-center">
+        {/* Planet Atmosphere Glow */}
+        <div className="absolute inset-0 rounded-full bg-blue-500/20 blur-2xl group-hover/globe:bg-blue-400/30 transition-colors duration-700" />
+        
+        {/* The Planet Surface */}
+        <motion.div
+           animate={{ rotate: 360 }}
+           transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+           className="w-24 h-24 rounded-full relative overflow-hidden shadow-[inset_-10px_-10px_20px_rgba(0,0,0,0.8),0_0_20px_rgba(56,189,248,0.3)] bg-gradient-to-tr from-blue-900 via-blue-600 to-cyan-300"
+        >
+           {/* Planet texture lines/clouds */}
+           <div className="absolute inset-0 opacity-30 mix-blend-overlay" style={{ backgroundImage: "repeating-linear-gradient(45deg, transparent, transparent 4px, white 4px, white 8px)" }} />
+           <div className="absolute -top-4 -left-4 w-12 h-12 bg-white/20 rounded-full blur-md" />
+           <div className="absolute bottom-2 right-2 w-16 h-8 bg-black/40 rounded-full blur-md" />
+        </motion.div>
+
+        {/* Orbit Ring */}
+        <motion.div
+          animate={{ rotate: -360 }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          className="absolute inset-4 border border-white/10 rounded-full opacity-50"
+          style={{ transform: "rotateX(75deg)" }}
+        />
+
+        {/* Pulsing Moon/Satellite */}
         <motion.div
           animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 border-t border-white/40 rounded-full"
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <GlobeIcon size={120} className="text-white/5 group-hover/globe:text-white/10 transition-colors" strokeWidth={0.5} />
-        </div>
-        {/* Pulsing Dot */}
-        <motion.div
-          animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute top-1/3 right-1/4 w-3 h-3 bg-white rounded-full blur-[2px]"
-        />
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          className="absolute inset-0"
+        >
+          <div className="absolute top-2 left-1/2 w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_white]" />
+        </motion.div>
       </div>
     </div>
   </BentoCard>
@@ -173,8 +200,87 @@ const EmailCard = () => {
   );
 };
 
+const ArchitectureCard = ({ icon, title, desc, index }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
+  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      className="relative h-[260px] md:h-[300px] w-full rounded-[2rem] glass border-white/10 p-6 cursor-default group overflow-hidden bg-gradient-to-br from-white/[0.04] to-transparent shadow-2xl"
+    >
+      <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
+      
+      {/* Background Index */}
+      <span className="absolute -bottom-6 -right-6 text-[10vw] md:text-[6vw] font-black text-white/[0.02] select-none leading-none tracking-tighter transition-transform group-hover:scale-110 duration-1000">
+        0{index + 1}
+      </span>
+
+      {/* Content wrapper for depth */}
+      <div style={{ transform: "translateZ(30px)" }} className="relative z-10 h-full flex flex-col justify-between">
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <div className="w-12 h-12 rounded-2xl glass border border-white/20 flex items-center justify-center text-white relative shadow-inner group-hover:border-white group-hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-all">
+              <div className="absolute inset-0 bg-white/5 blur-xl group-hover:opacity-100 opacity-0 transition-opacity" />
+              {React.cloneElement(icon, { size: 22, className: "relative z-10" })}
+            </div>
+            <div className="flex items-center gap-2 px-2 py-0.5 rounded-lg bg-white/5 border border-white/10">
+               <div className="w-1 h-1 rounded-full bg-green-500 animate-pulse shadow-[0_0_5px_rgba(34,197,94,0.8)]" />
+               <span className="text-[8px] font-black text-white/50 uppercase tracking-[0.2em]">Live</span>
+            </div>
+          </div>
+          
+          <h4 className="text-xl font-black text-white mb-2 tracking-tighter uppercase drop-shadow-sm group-hover:translate-x-1 transition-transform">{title}</h4>
+          <p className="text-muted-foreground text-xs leading-relaxed max-w-[180px]">
+            {desc}
+          </p>
+        </div>
+
+        <div className="pt-4 border-t border-white/5 flex items-center justify-between opacity-30">
+           <div className="flex gap-1.5">
+              {[1,2,3].map(i => <div key={i} className="w-1 h-1 bg-white/40 rounded-full" />)}
+           </div>
+           <span className="text-[6px] font-mono text-white/50 uppercase tracking-[0.4em]">system_v.02</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const TechOrbitCard = () => (
-  <BentoCard className="col-span-full md:col-span-7 lg:col-span-8 flex flex-col md:flex-row items-center justify-between gap-8 h-auto md:h-[300px]">
+  <BentoCard className="col-span-full md:col-span-12 lg:col-span-8 flex flex-col md:flex-row items-center justify-between gap-8 h-auto md:h-[300px]">
     <div className="max-w-xs text-center md:text-left">
       <h3 className="text-2xl font-black text-white mb-4">Tech Stack</h3>
       <p className="text-muted-foreground text-sm">I specialize in a variety of languages, frameworks, and tools that allow me to build robust and scalable applications.</p>
@@ -205,7 +311,10 @@ const TechOrbitCard = () => (
                className="w-10 h-10 rounded-xl glass border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:scale-110 transition-all pointer-events-auto"
                initial={{ x: 120, rotate: angle }}
             >
-              {React.cloneElement(tech.icon, { size: 20 })}
+              <div className="absolute inset-0 blur-xl opacity-20 transition-opacity group-hover:opacity-40" style={{ backgroundColor: tech.color }} />
+              <div style={{ color: tech.color }} className="relative z-10 transition-transform group-hover:scale-110 drop-shadow-[0_0_8px_currentColor]">
+                {React.cloneElement(tech.icon, { size: 20 })}
+              </div>
             </motion.div>
           </motion.div>
         );
@@ -219,7 +328,8 @@ const TechOrbitCard = () => (
 
 const Home = () => {
   return (
-    <div className="pt-20">
+    <PageTransition>
+      <div className="pt-20">
       {/* HERO SECTION */}
       <section className="relative min-h-[90vh] flex flex-col items-center justify-center px-4 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/5 rounded-full blur-[100px]" />
@@ -243,12 +353,12 @@ const Home = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/projects" className="w-full sm:w-auto px-10 py-5 rounded-2xl bg-white text-black font-extrabold flex items-center justify-center gap-2 hover:bg-neutral-200 transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)]">
+            <a href="#projects" className="w-full sm:w-auto px-10 py-5 rounded-2xl bg-white text-black font-extrabold flex items-center justify-center gap-2 hover:bg-neutral-200 transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)]">
               Explore My Work
-            </Link>
-            <Link to="/about" className="w-full sm:w-auto px-10 py-5 rounded-2xl border border-white/10 glass font-bold hover:bg-white/5 transition-all hover:scale-105 active:scale-95">
+            </a>
+            <a href="#about" className="w-full sm:w-auto px-10 py-5 rounded-2xl border border-white/10 glass font-bold hover:bg-white/5 transition-all hover:scale-105 active:scale-95">
               Read My Story
-            </Link>
+            </a>
           </div>
         </motion.div>
 
@@ -267,15 +377,13 @@ const Home = () => {
       <section className="relative py-24 px-4 overflow-hidden bg-background">
         {/* Scrolling Logo Bar */}
         <div className="absolute top-0 left-0 right-0 py-6 bg-black/40 backdrop-blur-md border-b border-white/5 overflow-hidden">
-          <div className="flex items-center justify-around gap-12 whitespace-nowrap animate-marquee px-4">
-             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
-                <div key={i} className="flex items-center gap-12 shrink-0">
-                  <div className="flex items-center gap-2 opacity-20 hover:opacity-100 transition-opacity grayscale invert">
-                     <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
-                        <div className="w-3 h-3 rounded-full bg-white" />
-                     </div>
-                     <span className="text-xl font-black tracking-tighter text-white">logoipsum</span>
-                  </div>
+          <div className="flex items-center gap-16 whitespace-nowrap animate-marquee px-4 w-max">
+             {[...MARQUEE_TECH, ...MARQUEE_TECH].map((tech, i) => (
+                <div key={i} className="flex items-center gap-4 opacity-20 hover:opacity-100 transition-all cursor-default group">
+                   <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all">
+                      {React.cloneElement(tech.icon, { size: 14 })}
+                   </div>
+                   <span className="text-xl font-black tracking-tighter text-white uppercase">{tech.name}</span>
                 </div>
              ))}
           </div>
@@ -358,34 +466,41 @@ const Home = () => {
       </section>
 
       {/* ARCHITECTURE SECTION */}
-      <section className="py-24 px-4 bg-white/2">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-4">ARCHITECTURE & STRATEGY.</h2>
-            <div className="h-1 w-20 bg-primary mx-auto" />
+      <section className="py-32 px-4 relative overflow-hidden bg-[#0a0a0a]">
+        {/* Background Blueprint Lines */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:100px_100px]" />
+          <div className="absolute inset-0 bg-radial-gradient(circle_at_center,transparent_0%,#000_100%)" />
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex flex-col md:flex-row items-end justify-between mb-24 gap-8">
+            <div className="max-w-2xl">
+              <div className="inline-block px-4 py-1.5 mb-6 text-[10px] font-black uppercase tracking-[0.4em] bg-white/5 text-muted-foreground rounded-md border border-white/10">
+                Core Systems
+              </div>
+              <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] text-white">
+                ARCHITECTURE<br />
+                <span className="text-gradient">& STRATEGY.</span>
+              </h2>
+            </div>
+            <div className="h-0.5 w-full md:w-32 bg-white/10 mb-6 hidden md:block" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: <Layers />, title: 'Scalable Systems', desc: 'Modular frontend architectures built for growth.' },
-              { icon: <Zap />, title: 'Performance', desc: 'Optimization for core web vitals and fast interaction.' },
-              { icon: <Shield />, title: 'Secure Design', desc: 'Robust data handling and authentication flows.' },
-              { icon: <Globe />, title: 'Modern APIs', desc: 'RESTful and Real-time integration strategies.' }
+              { icon: <Layers />, title: 'Scalable Systems', desc: 'Modular frontend architectures built for infinite growth and adaptability.' },
+              { icon: <Zap />, title: 'High Perf', desc: 'Extreme optimization for core web vitals and ultra-low latency response.' },
+              { icon: <Shield />, title: 'Secure Design', desc: 'Deep-level encryption and secure data orchestration as a standard.' },
+              { icon: <Globe />, title: 'Modern Core', desc: 'Distributed API strategies and real-time synchronization pipelines.' }
             ].map((skill, index) => (
-              <motion.div 
+              <ArchitectureCard 
                 key={index}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="p-8 border border-white/5 rounded-3xl hover:bg-white/5 transition-colors group"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
-                  {skill.icon}
-                </div>
-                <h4 className="text-xl font-bold mb-3">{skill.title}</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">{skill.desc}</p>
-              </motion.div>
+                index={index}
+                icon={skill.icon}
+                title={skill.title}
+                desc={skill.desc}
+              />
             ))}
           </div>
         </div>
@@ -425,7 +540,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 

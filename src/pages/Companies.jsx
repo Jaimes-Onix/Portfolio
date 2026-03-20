@@ -1,10 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import PageTransition from '../components/PageTransition';
 import { Layout } from 'lucide-react';
 
 const Companies = () => {
   return (
-    <div className="pt-32 pb-40 px-4 max-w-7xl mx-auto">
+    <PageTransition>
+      <div className="pt-32 pb-40 px-4 max-w-7xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3 py-1 mb-8 text-[10px] font-bold uppercase tracking-[0.2em] border border-white/10 rounded-full glass text-muted-foreground">
             <Layout size={12} /> Companies
         </div>
@@ -60,7 +62,8 @@ const Companies = () => {
                 ))}
             </div>
         </div>
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 
