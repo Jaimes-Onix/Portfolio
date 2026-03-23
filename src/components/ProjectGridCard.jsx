@@ -89,12 +89,12 @@ const ProjectGridCard = ({ project, index }) => {
           variants={arrowVariants}
           className="overflow-hidden flex items-center"
         >
-          <MoveRight size={32} className="text-white group-hover:text-[#00E5FF] transition-colors" />
+          <MoveRight size={32} className="text-white group-hover:text-[#00d2ff] transition-colors" />
         </motion.div>
 
         <motion.h3 
           variants={titleVariants}
-          className="text-3xl md:text-4xl font-medium tracking-tight text-white transition-colors group-hover:text-[#00E5FF]"
+          className="text-3xl md:text-4xl font-medium tracking-tight text-white transition-colors group-hover:text-[#00d2ff]"
         >
           {project.title}
         </motion.h3>

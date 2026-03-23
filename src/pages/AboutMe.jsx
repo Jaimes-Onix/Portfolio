@@ -284,12 +284,12 @@ const ThreeDSlider = () => {
 const AboutMe = () => {
   return (
     <PageTransition>
-      <div className="pt-20 min-h-screen bg-[#060606]">
+      <div className="pt-20 min-h-screen bg-transparent">
       <section className="relative py-24 px-4 overflow-hidden">
         {/* Background Drafting Lines */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.5)_1px,transparent_1px)] bg-[size:100px_100px]" />
-          <div className="absolute inset-0 bg-radial-gradient(circle_at_center,transparent_0%,#000_100%)" />
+          <div className="absolute inset-0 bg-radial-gradient(circle_at_center,transparent_0%,transparent_100%)" />
         </div>
         
         <div className="max-w-7xl mx-auto mt-20 relative">

@@ -5,7 +5,7 @@ import '../../styles/hero.css';
 
 const Hero = () => {
   return (
-    <div id="home" className="relative h-[400vh] bg-[#001827]">
+    <div id="home" className="relative h-[400vh] bg-transparent">
       {/* Sticky Container */}
       <div className="sticky top-0 h-screen overflow-hidden">
         <HeroCanvas />

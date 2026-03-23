@@ -24,7 +24,7 @@ const Footer = () => {
   return (
     <footer className="relative bg-[#050505] text-white pt-32 pb-10 px-6 md:px-12 border-t border-white/5 overflow-hidden">
       {/* Background Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#00E5FF]/5 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#00d2ff]/5 blur-[150px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto relative z-10 w-full">
         {/* Top Section: Huge CTA */}
@@ -37,7 +37,7 @@ const Footer = () => {
               className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] uppercase"
             >
               Let's build <br />
-              <span className="text-[#00E5FF] italic">the future.</span>
+              <span className="text-[#00d2ff] italic">the future.</span>
             </motion.h2>
           </div>
           
@@ -49,9 +49,9 @@ const Footer = () => {
           >
             <a 
               href="mailto:hello@jaimesedward.dev" 
-              className="group relative flex items-center justify-center w-32 h-32 md:w-40 md:h-40 rounded-full bg-white text-black hover:bg-[#00E5FF] transition-all duration-500 overflow-hidden"
+              className="group relative flex items-center justify-center w-32 h-32 md:w-40 md:h-40 rounded-full bg-white text-black hover:bg-[#00d2ff] transition-all duration-500 overflow-hidden"
             >
-              <div className="absolute inset-0 bg-[#00E5FF] translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[0.22,1,0.36,1]" />
+              <div className="absolute inset-0 bg-[#00d2ff] translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[0.22,1,0.36,1]" />
               <div className="relative z-10 flex flex-col items-center gap-2 group-hover:text-white transition-colors duration-300">
                 <ArrowUpRight size={32} className="group-hover:rotate-45 transition-transform duration-500" />
                 <span className="text-[10px] font-black tracking-widest uppercase">Get in touch</span>
@@ -71,11 +71,11 @@ const Footer = () => {
             <h4 className="text-[10px] uppercase tracking-[0.3em] font-black text-white/40">Local Time & Location</h4>
             <div className="space-y-4">
               <div className="flex items-center gap-3 text-white/80 hover:text-white transition-colors">
-                <MapPin size={16} className="text-[#00E5FF]" />
+                <MapPin size={16} className="text-[#00d2ff]" />
                 <span className="text-sm font-medium tracking-wide">Manila, Philippines</span>
               </div>
               <div className="flex items-center gap-3 text-white/80 hover:text-white transition-colors">
-                <Clock size={16} className="text-[#00E5FF]" />
+                <Clock size={16} className="text-[#00d2ff]" />
                 <span className="text-sm font-medium tracking-wide">{formattedTime} PHT</span>
               </div>
             </div>
@@ -89,7 +89,7 @@ const Footer = () => {
                 <li key={item}>
                   <Link 
                     to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-                    className="group relative inline-flex items-center gap-2 text-xl font-medium tracking-tight hover:text-[#00E5FF] transition-colors"
+                    className="group relative inline-flex items-center gap-2 text-xl font-medium tracking-tight hover:text-[#00d2ff] transition-colors"
                   >
                     {item}
                     <ArrowUpRight size={14} className="opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300" />
@@ -107,7 +107,7 @@ const Footer = () => {
                 <li key={platform}>
                   <a 
                     href="#" 
-                    className="group relative inline-flex items-center gap-2 text-xl font-medium tracking-tight hover:text-[#00E5FF] transition-colors"
+                    className="group relative inline-flex items-center gap-2 text-xl font-medium tracking-tight hover:text-[#00d2ff] transition-colors"
                   >
                     {platform}
                     <ArrowUpRight size={14} className="opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300" />
@@ -124,7 +124,7 @@ const Footer = () => {
               <p className="text-sm text-white/60 leading-relaxed">
                 Open for new opportunities. Feel free to reach out if you're looking for a developer, have a question, or simply want to connect.
               </p>
-              <a href="mailto:hello@jaimesedward.dev" className="inline-flex items-center gap-3 text-sm font-black tracking-widest uppercase hover:text-[#00E5FF] transition-colors pb-1 border-b border-white/20 hover:border-[#00E5FF]">
+              <a href="mailto:hello@jaimesedward.dev" className="inline-flex items-center gap-3 text-sm font-black tracking-widest uppercase hover:text-[#00d2ff] transition-colors pb-1 border-b border-white/20 hover:border-[#00d2ff]">
                 <Mail size={16} />
                 hello@jaimesedward.dev
               </a>

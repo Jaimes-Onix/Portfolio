@@ -161,7 +161,7 @@ const Navbar = () => {
           onClick={toggleMusic}
           className={cn(
             "relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500",
-            isPlaying ? "bg-[#00E5FF]/20 text-[#00E5FF] shadow-[0_0_20px_rgba(0,229,255,0.4)]" : "bg-white/5 text-white/40"
+            isPlaying ? "bg-[#00d2ff]/20 text-[#00d2ff] shadow-[0_0_20px_rgba(0,210,255,0.4)]" : "bg-white/5 text-white/40"
           )}
           aria-label={isPlaying ? "Pause Music" : "Play Music"}
         >
@@ -183,14 +183,14 @@ const Navbar = () => {
           {isPlaying && (
             <motion.div 
               layoutId="glow"
-              className="absolute inset-0 rounded-full bg-[#00E5FF]/20 blur-md -z-10"
+              className="absolute inset-0 rounded-full bg-[#00d2ff]/20 blur-md -z-10"
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             />
           )}
         </button>
 
-        <Link to="/about" className="hidden sm:block px-6 py-2.5 rounded-full bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-[#00E5FF] transition-all shadow-[0_0_25px_rgba(255,255,255,0.2)] hover:scale-105 active:scale-95">
+        <Link to="/about" className="hidden sm:block px-6 py-2.5 rounded-full bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-[#00d2ff] transition-all shadow-[0_0_25px_rgba(255,255,255,0.2)] hover:scale-105 active:scale-95">
           Join Mission
         </Link>
       </div>
@@ -214,9 +214,9 @@ export default function App() {
   const isProjectsPage = location.pathname.startsWith('/projects');
 
   return (
-    <div className="bg-black/50 text-white selection:bg-[#00E5FF] selection:text-black scroll-smooth min-h-screen flex flex-col">
+    <div className="bg-black/20 text-white selection:bg-[#00d2ff] selection:text-black scroll-smooth min-h-screen flex flex-col">
       <ScrollToTop />
-      {!isProjectsPage && <VideoBackground />}
+      <VideoBackground />
       <Navbar />
 
       <main className="relative flex-grow">

@@ -31,7 +31,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-transparent text-foreground antialiased selection:bg-white selection:text-black;
+    @apply bg-black text-foreground antialiased selection:bg-white selection:text-black;
     font-family: 'Outfit', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
     background-image: 
@@ -60,7 +60,7 @@
 .glass-morphic:hover {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
   border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 12px 48px 0 rgba(0, 229, 255, 0.15);
+  box-shadow: 0 12px 48px 0 rgba(255, 138, 0, 0.15);
 }
 
 .text-gradient {
@@ -68,7 +68,7 @@
 }
 
 .text-gradient-teal {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#00E5FF] to-white;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#00d2ff] via-[#9D00FF] to-[#FF0080];
 }
 
 ::-webkit-scrollbar {
@@ -286,10 +286,10 @@
 .uiverse-card::before {
   content: "";
   position: absolute;
-  inset: -3px;
+  inset: -1.5px;
   margin: auto;
   border-radius: 2.15rem;
-  background: linear-gradient(var(--card-angle), #00E5FF 0%, #E81CFF 100%);
+  background: linear-gradient(var(--card-angle), #00d2ff 0%, #3a7bd5 25%, #9D00FF 50%, #FF0080 100%);
   z-index: -1;
   pointer-events: none;
   transition: --card-angle 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -299,15 +299,17 @@
   content: "";
   z-index: -2;
   position: absolute;
-  inset: -3px;
+  inset: -1.5px;
   border-radius: 2.15rem;
-  background: linear-gradient(var(--card-angle), #00E5FF 0%, #E81CFF 100%);
-  filter: blur(20px);
-  transition: --card-angle 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: linear-gradient(var(--card-angle), #00d2ff 0%, #3a7bd5 25%, #9D00FF 50%, #FF0080 100%);
+  filter: blur(12px);
+  opacity: 0.5;
+  transition: --card-angle 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.6s ease;
 }
 
 .group:hover .uiverse-card::after {
-  filter: blur(35px);
+  filter: blur(20px);
+  opacity: 0.8;
 }
 
 .group:hover .uiverse-card::before,

@@ -148,7 +148,7 @@ const ProjectDetails = () => {
   }, [id]);
 
   return (
-    <div className="bg-[#0B0C0E] text-white font-sans selection:bg-[#00E5FF] selection:text-black min-h-screen">
+    <div className="bg-transparent text-white font-sans selection:bg-[#00d2ff] selection:text-black min-h-screen">
       {/* Navigation / Back Button */}
       <nav className="fixed top-0 left-0 w-full z-50 px-10 py-12 flex justify-between items-center pointer-events-none">
         <button 
@@ -165,7 +165,7 @@ const ProjectDetails = () => {
       {/* Main Container providing vertical scroll space */}
       <div ref={targetRef} className="relative h-[500vh]">
         {/* Sticky Wrapper - Viewport Size */}
-        <div className="sticky top-0 h-screen overflow-hidden bg-[#0B0C0E]">
+        <div className="sticky top-0 h-screen overflow-hidden bg-transparent">
           {/* Horizontal Track */}
           <motion.div style={{ x }} className="flex h-full w-[500vw]">
             
@@ -253,14 +253,14 @@ const ProjectDetails = () => {
               <div className="w-1/2 h-[70vh] rounded-[3rem] overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-700 shadow-xl group">
                 <img src={project.image} className="w-full h-full object-cover object-bottom scale-110 group-hover:scale-100 transition-transform duration-1000" />
                 <div className="absolute bottom-10 left-10 text-white opacity-0 group-hover:opacity-100 transition-all duration-500">
-                   <h3 className="text-2xl font-bold tracking-widest uppercase mb-2 text-[#00E5FF]">UX Methodology</h3>
+                   <h3 className="text-2xl font-bold tracking-widest uppercase mb-2 text-[#00d2ff]">UX Methodology</h3>
                    <p className="max-w-md text-sm text-white/70">Seamless integration of form and function through rigorous usability testing.</p>
                 </div>
               </div>
               <div className="w-1/2 h-[70vh] rounded-[3rem] overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-700 shadow-xl mt-24 group">
                 <img src={project.image} className="w-full h-full object-cover object-top scale-110 group-hover:scale-100 transition-transform duration-1000" />
                 <div className="absolute bottom-10 left-10 text-white opacity-0 group-hover:opacity-100 transition-all duration-500">
-                   <h3 className="text-2xl font-bold tracking-widest uppercase mb-2 text-[#00E5FF]">Technical Stack</h3>
+                   <h3 className="text-2xl font-bold tracking-widest uppercase mb-2 text-[#00d2ff]">Technical Stack</h3>
                    <p className="max-w-md text-sm text-white/70">Engineered with cutting-edge front-end technologies for ultimate performance.</p>
                 </div>
               </div>

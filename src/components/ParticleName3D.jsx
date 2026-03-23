@@ -45,7 +45,7 @@ export default function ParticleName3D({ text, isCollapsing, onCollapseComplete 
           if (Math.random() > 0.8) {
               colorsArr.push(1, 1, 1); // White
           } else {
-              colorsArr.push(0, 0.9, 1); // Cyan
+              colorsArr.push(0, 0.82, 1); // Cyan (#00d2ff approx)
           }
         }
       }

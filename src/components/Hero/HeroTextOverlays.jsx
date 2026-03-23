@@ -38,7 +38,7 @@ const HeroTextOverlays = () => {
           <div className="flex flex-col">
             <span className="text-white/40 text-[10px] uppercase tracking-[0.4em] font-black mb-2">Architecting The Web</span>
             <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none italic uppercase">
-              JAIMES<br />EDWARD<span className="text-[#00E5FF]">.</span>
+              JAIMES<br />EDWARD<span className="text-[#00d2ff]">.</span>
             </h2>
           </div>
         </motion.div>
@@ -62,7 +62,7 @@ const HeroTextOverlays = () => {
           className="absolute bottom-16 left-8 md:bottom-24 md:left-12 max-w-sm"
         >
           <div className="flex flex-col gap-4">
-            <div className="w-12 h-1 bg-[#00E5FF] rounded-full" />
+            <div className="w-12 h-1 bg-[#00d2ff] rounded-full" />
             <p className="text-white font-black text-2xl md:text-4xl tracking-tighter leading-[0.9] uppercase italic">
               "Building Software That<br />Feels Like Magic."
             </p>
@@ -85,7 +85,7 @@ const HeroTextOverlays = () => {
             href="#projects"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group px-10 py-5 rounded-full bg-white text-black font-black text-xs uppercase tracking-[0.2em] shadow-[0_0_40px_rgba(255,255,255,0.2)] flex items-center gap-4 transition-all hover:bg-[#00E5FF]"
+            className="group px-10 py-5 rounded-full bg-white text-black font-black text-xs uppercase tracking-[0.2em] shadow-[0_0_40px_rgba(255,255,255,0.2)] flex items-center gap-4 transition-all hover:bg-[#00d2ff]"
           >
             Explore Projects
             <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-white group-hover:rotate-45 transition-transform duration-500">

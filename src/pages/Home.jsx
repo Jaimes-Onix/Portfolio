@@ -374,7 +374,7 @@ const Home = () => {
       </section>
 
       {/* THEMED ABOUT SECTION (2ND LAYER) */}
-      <section className="relative py-24 px-4 overflow-hidden bg-background">
+      <section className="relative py-24 px-4 overflow-hidden bg-transparent">
         {/* Scrolling Logo Bar */}
         <div className="absolute top-0 left-0 right-0 py-6 bg-black/40 backdrop-blur-md border-b border-white/5 overflow-hidden">
           <div className="flex items-center gap-16 whitespace-nowrap animate-marquee px-4 w-max">
@@ -466,11 +466,11 @@ const Home = () => {
       </section>
 
       {/* ARCHITECTURE SECTION */}
-      <section className="py-32 px-4 relative overflow-hidden bg-[#0a0a0a]">
+      <section className="py-32 px-4 relative overflow-hidden bg-transparent">
         {/* Background Blueprint Lines */}
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:100px_100px]" />
-          <div className="absolute inset-0 bg-radial-gradient(circle_at_center,transparent_0%,#000_100%)" />
+          <div className="absolute inset-0 bg-radial-gradient(circle_at_center,transparent_0%,transparent_100%)" />
         </div>
 
         <div className="max-w-7xl mx-auto relative z-10">
@@ -507,7 +507,7 @@ const Home = () => {
       </section>
 
       {/* BENTO GRID TECH STACK */}
-      <section className="py-24 px-4 relative overflow-hidden bg-background">
+      <section className="py-24 px-4 relative overflow-hidden bg-transparent">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-white/[0.01] rounded-full blur-[150px] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto relative z-10">

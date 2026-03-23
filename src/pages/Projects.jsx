@@ -82,7 +82,7 @@ const PROJECTS_DATA = [
 const Projects = () => {
   return (
     <PageTransition>
-      <div className="bg-[#050505] text-white min-h-screen font-sans pt-32 pb-20 px-10 md:px-32 lg:px-48 xl:px-64 relative z-10">
+      <div className="bg-transparent text-white min-h-screen font-sans pt-32 pb-20 px-10 md:px-32 lg:px-48 xl:px-64 relative z-10">
         {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
           {PROJECTS_DATA.map((project, index) => (

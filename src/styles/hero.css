@@ -29,7 +29,7 @@ html {
 
 /* Text Gradient for Luxury Feel */
 .text-gradient-teal {
-  background: linear-gradient(135deg, #00E5FF 0%, #005f73 100%);
+  background: linear-gradient(135deg, #00d2ff 0%, #9D00FF 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;

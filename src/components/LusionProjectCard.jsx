@@ -64,8 +64,8 @@ const LusionProjectCard = ({ project, index, scrollYProgress, total }) => {
             alt={project.title} 
             className="w-full h-full object-cover opacity-60 transition-transform duration-1000"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-          <div className="absolute inset-0 bg-radial-gradient(circle_at_center, transparent 0%, rgba(0,0,0,0.8) 100%)" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-radial-gradient(circle_at_center, transparent 0%, rgba(0,0,0,0.4) 100%)" />
         </div>
 
         {/* Content Layer */}
@@ -79,7 +79,7 @@ const LusionProjectCard = ({ project, index, scrollYProgress, total }) => {
             <h2 className="text-5xl md:text-7xl lg:text-[7vw] font-black tracking-tighter leading-[0.85] text-white uppercase italic mb-8 max-w-5xl">
               {project.title.split(' ')[0]}<br />
               {project.title.split(' ').slice(1).length > 0 && (
-                <span className="text-[#00E5FF] mt-2 block">
+                <span className="text-[#00d2ff] mt-2 block">
                   {project.title.split(' ').slice(1).join(' ')}
                 </span>
               )}
@@ -101,7 +101,7 @@ const LusionProjectCard = ({ project, index, scrollYProgress, total }) => {
 
               <button className="group flex items-center gap-6 text-xl font-black italic text-white/30 hover:text-white transition-all">
                 EXPLORE_DETAILS
-                <div className="w-16 h-16 rounded-full glass flex items-center justify-center group-hover:bg-[#00E5FF] group-hover:text-black transition-all group-hover:rotate-45 shadow-[0_0_40px_rgba(0,229,255,0.3)] border-white/10">
+                <div className="w-16 h-16 rounded-full glass flex items-center justify-center group-hover:bg-[#00d2ff] group-hover:text-black transition-all group-hover:rotate-45 shadow-[0_0_20px_rgba(0,210,255,0.2)] border-white/10">
                    <ExternalLink size={24} />
                 </div>
               </button>
