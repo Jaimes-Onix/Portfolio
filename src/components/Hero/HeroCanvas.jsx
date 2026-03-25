@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useScroll, useTransform, motion } from 'framer-motion';
 
-const FRAME_COUNT = 120; // 1 to 120 frames
+const FRAME_COUNT = 151; // Matching the 151 frames found in /Images/
 
 const HeroCanvas = () => {
   const canvasRef = useRef(null);
   const { scrollYProgress } = useScroll();
   
-  // Map scroll progress (0-1) to frame index (1-120)
+  // Map scroll progress (0-1) to frame index (1-151)
   const frameIndex = useTransform(scrollYProgress, [0, 1], [1, FRAME_COUNT]);
   
   const [images, setImages] = useState([]);
@@ -21,9 +21,8 @@ const HeroCanvas = () => {
 
       for (let i = 1; i <= FRAME_COUNT; i++) {
         const img = new Image();
-        // Since I don't have frames, I'll use a placeholder for now.
-        // But the user can drop their frames in: /public/images/hero/[1-120].webp
-        img.src = `/images/hero/${i}.webp`; 
+        const n = String(i).padStart(3, '0');
+        img.src = `/Images/ezgif-frame-${n}.jpg`; 
         
         img.onload = () => {
           loadedCount++;
