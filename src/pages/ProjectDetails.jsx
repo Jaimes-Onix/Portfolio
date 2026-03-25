@@ -223,16 +223,13 @@ const ProjectDetails = () => {
               </div>
             </section>
 
-            {/* SECTION 2: 3 SQUARES GALLERY */}
-            <section className="relative w-screen h-full flex items-center justify-center p-10 md:p-20 gap-8">
-              <div className="w-1/3 h-[50vh] md:h-[65vh] rounded-3xl overflow-hidden glass shadow-2xl transition-all duration-700 hover:scale-105">
+            {/* SECTION 2: 2 SQUARES GALLERY */}
+            <section className="relative w-screen h-full flex items-center justify-center p-10 md:p-20 gap-10">
+              <div className="w-1/2 h-[55vh] md:h-[70vh] rounded-3xl overflow-hidden glass shadow-2xl transition-all duration-700 hover:scale-105">
                  <img src={project.image} alt="Detail" className="w-full h-full object-cover scale-150 object-left-top mix-blend-luminosity hover:mix-blend-normal transition-all duration-700" />
               </div>
-              <div className="w-1/3 h-[50vh] md:h-[65vh] rounded-3xl overflow-hidden glass shadow-2xl transition-all duration-700 hover:scale-105 translate-y-12">
+              <div className="w-1/2 h-[55vh] md:h-[70vh] rounded-3xl overflow-hidden glass shadow-2xl transition-all duration-700 hover:scale-105 translate-y-12">
                  <img src={project.image} alt="Detail" className="w-full h-full object-cover scale-150 object-center mix-blend-luminosity hover:mix-blend-normal transition-all duration-700" />
-              </div>
-              <div className="w-1/3 h-[50vh] md:h-[65vh] rounded-3xl overflow-hidden glass shadow-2xl transition-all duration-700 hover:scale-105 -translate-y-12">
-                 <img src={project.image} alt="Detail" className="w-full h-full object-cover scale-150 object-right-bottom mix-blend-luminosity hover:mix-blend-normal transition-all duration-700" />
               </div>
             </section>
 

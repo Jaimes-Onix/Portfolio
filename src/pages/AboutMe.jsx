@@ -166,10 +166,10 @@ const TechCard = ({ item, isExpanded = false }) => {
       />
 
       {/* Inner Card Content */}
-      <div className={`relative w-full h-full bg-[#0a0a0a]/90 backdrop-blur-2xl rounded-[23px] flex flex-col justify-between border border-white/10 overflow-hidden ${isExpanded ? 'p-10' : 'p-6'}`}>
+      <div className={`relative w-full h-full bg-[#0a0a0a]/90 backdrop-blur-md rounded-[23px] flex flex-col justify-between border border-white/10 overflow-hidden ${isExpanded ? 'p-10' : 'p-6'}`}>
         {/* Background Glow inside card */}
-        <div className={`absolute -top-20 -right-20 rounded-full blur-[80px] pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity ${isExpanded ? 'w-80 h-80' : 'w-40 h-40'}`} style={{ backgroundColor: item.color }} />
-        <div className={`absolute -bottom-20 -left-20 rounded-full blur-[80px] pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity ${isExpanded ? 'w-80 h-80' : 'w-40 h-40'}`} style={{ backgroundColor: item.color }} />
+        <div className={`absolute -top-20 -right-20 rounded-full pointer-events-none opacity-40 group-hover:opacity-70 transition-opacity ${isExpanded ? 'w-80 h-80' : 'w-40 h-40'}`} style={{ background: `radial-gradient(circle, ${item.color} 0%, transparent 70%)` }} />
+        <div className={`absolute -bottom-20 -left-20 rounded-full pointer-events-none opacity-40 group-hover:opacity-70 transition-opacity ${isExpanded ? 'w-80 h-80' : 'w-40 h-40'}`} style={{ background: `radial-gradient(circle, ${item.color} 0%, transparent 70%)` }} />
 
         {/* Header */}
         <div className="text-center z-10 pt-4">
@@ -208,17 +208,6 @@ const TechCard = ({ item, isExpanded = false }) => {
 
 const ThreeDSlider = () => {
   const [selectedItem, setSelectedItem] = useState(null);
-  const bannerRef = useRef(null);
-  const isInView = useInView(bannerRef, { once: true, amount: 0.3 });
-  const [isRotating, setIsRotating] = useState(false);
-
-  useEffect(() => {
-    if (isInView) {
-      // Delay rotation until flying intro is finished (based on transition durations)
-      const timer = setTimeout(() => setIsRotating(true), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [isInView]);
 
   return (
     <section className="py-20 mb-20 relative overflow-hidden bg-transparent">
@@ -234,8 +223,8 @@ const ThreeDSlider = () => {
           </h2>
         </div>
 
-        <div ref={bannerRef} className={`banner ${isInView ? 'is-visible' : ''}`}>
-          <div className={`slider ${isRotating ? 'is-active' : ''}`} style={{ '--quantity': TECH_ITEMS.length }}>
+        <div className="banner">
+          <div className="slider is-active" style={{ '--quantity': TECH_ITEMS.length }}>
             {TECH_ITEMS.map((item, index) => (
               <motion.div 
                 key={item.id} 

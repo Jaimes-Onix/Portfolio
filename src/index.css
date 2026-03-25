@@ -201,6 +201,7 @@
   transform-style: preserve-3d;
   z-index: 10;
   transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
 }
 
 .banner .slider.is-active {
@@ -220,16 +221,10 @@
   position: absolute;
   inset: 0 0 0 0;
   transform-style: preserve-3d;
-  /* Initial state: at center and hidden */
-  transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(0px);
-  opacity: 0;
-  transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease;
-  transition-delay: calc(var(--position) * 0.1s);
-}
-
-.banner.is-visible .slider .item {
   transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(450px);
   opacity: 1;
+  transition: transform 0.5s ease;
+  will-change: transform;
 }
 
 .banner .slider:hover {
