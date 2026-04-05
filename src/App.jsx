@@ -124,10 +124,11 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: 'Projects', path: '/projects', category: 'projects' },
-    { name: 'Technologies', path: '/about', category: 'technologies' },
-    { name: 'Services', path: '/about', category: 'services' },
-    { name: 'Clients', path: '/clients' }
+    { name: 'Home', path: '/', category: 'home' },
+    { name: 'Projectes', path: '/projects', category: 'projects' },
+    { name: 'About', path: '/about', category: 'about' },
+    { name: 'Contact Us', path: '#contact' },
+    { name: 'Clients and collaborators', path: '/clients' }
   ];
 
   const [activeMenu, setActiveMenu] = useState(null);
@@ -168,15 +169,18 @@ const Navbar = () => {
       >
         <audio ref={audioRef} src="/audio/ambient.mp3" loop />
         
-        <div className="flex items-center gap-12">
+        {/* Left: Logo */}
+        <div className="flex items-center">
             <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center group-hover:scale-110 transition-transform">
-                <div className="w-4 h-4 rounded-full bg-black" />
-            </div>
-            <div className="text-xl font-black tracking-tighter text-white">JAIMES.EDWARD</div>
+                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="w-4 h-4 rounded-full bg-black" />
+                </div>
+                <div className="text-xl font-black tracking-tighter text-white">JAIMES.EDWARD</div>
             </Link>
+        </div>
 
-            <div className="hidden lg:flex gap-8 relative h-full items-center">
+        {/* Center: Nav Links */}
+        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-8 h-full">
             {navLinks.map((link) => (
                 <div 
                     key={link.name} 
@@ -202,7 +206,6 @@ const Navbar = () => {
                     <MegaMenu category={activeMenu} onMouseLeave={handleMouseLeave} />
                 )}
             </AnimatePresence>
-            </div>
         </div>
 
         <div className="flex items-center gap-6">

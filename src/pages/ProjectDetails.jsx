@@ -150,15 +150,18 @@ const ProjectDetails = () => {
   return (
     <div className="bg-transparent text-white font-sans selection:bg-[#00d2ff] selection:text-black min-h-screen">
       {/* Navigation / Back Button */}
-      <nav className="fixed top-0 left-0 w-full z-50 px-10 py-12 flex justify-between items-center pointer-events-none">
+      <nav className="fixed top-28 left-10 z-[160] pointer-events-none">
         <button 
           onClick={() => navigate('/projects')}
-          className="group flex items-center gap-3 text-white pointer-events-auto"
+          className="group flex items-center gap-4 text-white pointer-events-auto"
         >
-          <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
-            <ArrowLeft size={18} />
+          <div className="w-12 h-12 rounded-full border border-white/20 bg-black/40 backdrop-blur-md flex items-center justify-center group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-500 shadow-2xl">
+            <ArrowLeft size={20} />
           </div>
-          <span className="text-[11px] font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity">Back to Projects</span>
+          <div className="flex flex-col">
+            <span className="text-[10px] font-black tracking-[0.2em] uppercase opacity-60 group-hover:opacity-100 transition-opacity">Return</span>
+            <span className="text-[8px] font-medium tracking-widest uppercase opacity-40 group-hover:opacity-100 transition-opacity">to Projectes</span>
+          </div>
         </button>
       </nav>
 
