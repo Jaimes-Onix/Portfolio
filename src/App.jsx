@@ -21,6 +21,7 @@ import AboutMe from './pages/AboutMe';
 import Companies from './pages/Companies';
 import LoadingScreen from './components/LoadingScreen';
 import Footer from './components/Footer';
+import MegaMenu from './components/MegaMenu';
 
 // Helper for Tailwind classes
 export function cn(...inputs) {
@@ -123,78 +124,119 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Projects', path: '/projects' },
-    { name: 'About', path: '/about' },
+    { name: 'Projects', path: '/projects', category: 'projects' },
+    { name: 'Technologies', path: '/about', category: 'technologies' },
+    { name: 'Services', path: '/about', category: 'services' },
     { name: 'Clients', path: '/clients' }
   ];
 
+  const [activeMenu, setActiveMenu] = useState(null);
+  const timerRef = useRef(null);
+
+  const handleMouseEnter = (category) => {
+    if (!category) return;
+    if (timerRef.current) clearTimeout(timerRef.current);
+    setActiveMenu(category);
+  };
+
+  const handleMouseLeave = () => {
+    timerRef.current = setTimeout(() => {
+        setActiveMenu(null);
+    }, 150);
+  };
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-8 py-5 border-b border-white/5 backdrop-blur-xl bg-black/20 mx-4 mt-4 max-w-7xl lg:mx-auto rounded-3xl">
-      <audio ref={audioRef} src="/audio/ambient.mp3" loop />
-      
-      <Link to="/" className="flex items-center gap-2 group">
-        <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center group-hover:scale-110 transition-transform">
-            <div className="w-4 h-4 rounded-full bg-black" />
-        </div>
-        <div className="text-xl font-black tracking-tighter text-white">JAIMES.EDWARD</div>
-      </Link>
+    <>
+      {/* Background Blur Overlay when menu is active */}
+      <AnimatePresence>
+        {activeMenu && (
+          <motion.div 
+            initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+            animate={{ opacity: 1, backdropFilter: 'blur(8px)' }}
+            exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+            className="fixed inset-0 z-[140] bg-black/40 pointer-events-none"
+          />
+        )}
+      </AnimatePresence>
 
-      <div className="hidden md:flex gap-10">
-        {navLinks.map((link) => (
-          <NavLink 
-            key={link.name} 
-            to={link.path} 
-            className={({ isActive }) => cn(
-              "text-[10px] font-black uppercase tracking-[0.3em] transition-all hover:translate-y-[-1px]",
-              isActive ? "text-white" : "text-white/40 hover:text-white"
-            )}
-          >
-            {link.name}
-          </NavLink>
-        ))}
-      </div>
-
-      <div className="flex items-center gap-6">
-        {/* Modern Music Toggle */}
-        <button 
-          onClick={toggleMusic}
-          className={cn(
-            "relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500",
-            isPlaying ? "bg-[#00d2ff]/20 text-[#00d2ff] shadow-[0_0_20px_rgba(0,210,255,0.4)]" : "bg-white/5 text-white/40"
-          )}
-          aria-label={isPlaying ? "Pause Music" : "Play Music"}
-        >
-          {isPlaying ? (
-            <div className="flex items-end gap-[2px] h-3">
-              {[1, 2, 3, 4].map(i => (
-                <motion.div 
-                  key={i}
-                  animate={{ height: ["40%", "100%", "40%"] }}
-                  transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.1 }}
-                  className="w-[2px] bg-current rounded-full"
-                />
-              ))}
+      <nav 
+        className={cn(
+            "fixed top-0 left-0 right-0 z-[150] flex items-center justify-between px-8 py-4 border-b transition-all duration-500",
+            activeMenu ? "bg-[#0a0c10]/95 border-white/10" : "bg-black/20 border-white/5 backdrop-blur-xl"
+        )}
+        onMouseLeave={handleMouseLeave}
+      >
+        <audio ref={audioRef} src="/audio/ambient.mp3" loop />
+        
+        <div className="flex items-center gap-12">
+            <Link to="/" className="flex items-center gap-2 group">
+            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="w-4 h-4 rounded-full bg-black" />
             </div>
-          ) : (
-            <VolumeX size={16} />
-          )}
-          
-          {isPlaying && (
-            <motion.div 
-              layoutId="glow"
-              className="absolute inset-0 rounded-full bg-[#00d2ff]/20 blur-md -z-10"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-          )}
-        </button>
+            <div className="text-xl font-black tracking-tighter text-white">JAIMES.EDWARD</div>
+            </Link>
 
-        <Link to="/about" className="hidden sm:block px-6 py-2.5 rounded-full bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-[#00d2ff] transition-all shadow-[0_0_25px_rgba(255,255,255,0.2)] hover:scale-105 active:scale-95">
-          Join Mission
-        </Link>
-      </div>
-    </nav>
+            <div className="hidden lg:flex gap-8 relative h-full items-center">
+            {navLinks.map((link) => (
+                <div 
+                    key={link.name} 
+                    className="relative py-2"
+                    onMouseEnter={() => handleMouseEnter(link.category)}
+                >
+                    <NavLink 
+                        to={link.path} 
+                        className={({ isActive }) => cn(
+                        "text-[10px] font-black uppercase tracking-[0.3em] transition-all flex items-center gap-1",
+                        isActive ? "text-white" : "text-white/40 hover:text-white"
+                        )}
+                    >
+                        {link.name}
+                        {link.category && <motion.span animate={{ rotate: activeMenu === link.category ? 180 : 0 }}>▾</motion.span>}
+                    </NavLink>
+                </div>
+            ))}
+
+            {/* MegaMenu Portal */}
+            <AnimatePresence>
+                {activeMenu && (
+                    <MegaMenu category={activeMenu} onMouseLeave={handleMouseLeave} />
+                )}
+            </AnimatePresence>
+            </div>
+        </div>
+
+        <div className="flex items-center gap-6">
+            {/* Modern Music Toggle */}
+            <button 
+                onClick={toggleMusic}
+                className={cn(
+                    "relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500",
+                    isPlaying ? "bg-[#00d2ff]/20 text-[#00d2ff] shadow-[0_0_20px_rgba(0,210,255,0.4)]" : "bg-white/5 text-white/40"
+                )}
+                aria-label={isPlaying ? "Pause Music" : "Play Music"}
+            >
+                {isPlaying ? (
+                    <div className="flex items-end gap-[2px] h-3">
+                    {[1, 2, 3, 4].map(i => (
+                        <motion.div 
+                        key={i}
+                        animate={{ height: ["40%", "100%", "40%"] }}
+                        transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.1 }}
+                        className="w-[2px] bg-current rounded-full"
+                        />
+                    ))}
+                    </div>
+                ) : (
+                    <VolumeX size={16} />
+                )}
+            </button>
+
+            <Link to="/about" className="hidden sm:block px-6 py-2.5 rounded-xl bg-white text-black text-[9px] font-black uppercase tracking-widest hover:bg-[#00d2ff] transition-all hover:scale-105 active:scale-95">
+                Join Mission
+            </Link>
+        </div>
+      </nav>
+    </>
   );
 };
 

@@ -3,7 +3,8 @@ import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from
 import PageTransition from '../components/PageTransition';
 import { 
   ChevronDown, Code, Layout, Database, Terminal, Cpu, 
-  Shield, Zap, Layers, Globe, Palette, Copy, Check, GlobeIcon 
+  Shield, Zap, Layers, Globe, Palette, Copy, Check, GlobeIcon, 
+  Search, PenTool, Lightbulb, Activity, Rocket, MessageSquare, ArrowRight
 } from 'lucide-react';
 
 
@@ -538,6 +539,81 @@ const Home = () => {
             <EmailCard />
             <TechOrbitCard />
           </div>
+        </div>
+      </section>
+
+      {/* THE FORMULA: PROCESS SECTION */}
+      <section className="py-32 px-4 relative overflow-hidden">
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="max-w-6xl mx-auto">
+            <div className="flex flex-col items-center text-center mb-24">
+                <div className="w-16 h-16 rounded-3xl glass border border-white/10 flex items-center justify-center text-[#00d2ff] mb-8 shadow-[0_0_30px_rgba(0,210,255,0.2)]">
+                    <Activity size={28} />
+                </div>
+                <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white mb-6 uppercase">THE FORMULA</h2>
+                <p className="text-muted-foreground text-sm max-w-lg leading-relaxed uppercase tracking-widest font-black opacity-30">FROM ARCHITECTURE TO EXECUTION</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+                {/* Connecting Line (Horizontal) */}
+                <div className="absolute top-1/2 left-0 right-0 h-px bg-white/5 -translate-y-1/2 hidden md:block" />
+                
+                {[
+                    { step: "01", name: "Strategize", icon: <Lightbulb />, desc: "Breaking down requirements into modular technical blueprints and user journey maps." },
+                    { step: "02", name: "Design", icon: <PenTool />, desc: "Translating architecture into pixel-perfect, motion-rich interfaces with optimized UX." },
+                    { step: "03", name: "Construct", icon: <Code />, desc: "Rapid implementation using modern tech stacks (React, Next.js, Node) with clean, tested code." },
+                    { step: "04", name: "Deploy", icon: <Rocket />, desc: "Scale gracefully using CI/CD pipelines and high-availability cloud infrastructure." }
+                ].map((item, i) => (
+                    <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.1 }}
+                        className="relative z-10 flex flex-col items-center text-center group"
+                    >
+                        <div className="w-14 h-14 rounded-2xl glass border border-white/10 flex items-center justify-center text-white mb-6 group-hover:bg-white group-hover:text-black transition-all group-hover:scale-110 shadow-xl">
+                            {item.icon}
+                        </div>
+                        <div className="text-[10px] font-black tracking-[0.4em] text-white/20 mb-3 uppercase">Stage // {item.step}</div>
+                        <h4 className="text-xl font-black text-white mb-4 tracking-tighter uppercase">{item.name}</h4>
+                        <p className="text-[11px] text-white/40 leading-relaxed max-w-[200px]">{item.desc}</p>
+                    </motion.div>
+                ))}
+            </div>
+        </div>
+      </section>
+
+      {/* FINAL MISSION CTA */}
+      <section className="py-40 px-4 relative overflow-hidden bg-black/40">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,100,255,0.1)_0%,transparent_50%)]" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+            <h2 className="text-6xl md:text-8xl font-black tracking-tighter mb-10 leading-[0.85] text-white">
+                LET'S BUILD<br />
+                <span className="text-gradient">SOMETHING NEW.</span>
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed italic">
+                "Whether you're starting from scratch or optimizing an existing system, I bring the technical depth and design precision to make it stand out."
+            </p>
+            
+            <div className="flex flex-wrap items-center justify-center gap-6">
+                <a href="mailto:hello@jaimesedward.dev" className="px-12 py-6 rounded-[2rem] bg-white text-black font-black uppercase tracking-widest hover:bg-[#00d2ff] transition-all hover:scale-105 active:scale-95 flex items-center gap-4">
+                    START PROJECT <ArrowRight />
+                </a>
+                <div className="flex items-center gap-8 px-8 py-6 rounded-[2rem] glass border border-white/5">
+                    <div className="flex -space-x-4">
+                        {[1,2,3].map(i => (
+                            <div key={i} className="w-10 h-10 rounded-full border-2 border-black bg-neutral-900 overflow-hidden">
+                                <img src={`https://i.pravatar.cc/40?u=${i}`} alt="Avatar" />
+                            </div>
+                        ))}
+                    </div>
+                    <div>
+                        <div className="text-xs font-bold text-white mb-1">Collaboration First</div>
+                        <div className="text-[9px] uppercase tracking-widest text-white/30">Join 20+ satisfied founders</div>
+                    </div>
+                </div>
+            </div>
         </div>
       </section>
       </div>
